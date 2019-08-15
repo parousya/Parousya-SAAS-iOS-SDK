@@ -61,7 +61,7 @@ You will have 2 choice in starting Parousya SAAS client:
 
 You will need to choose between debug and production mode.  Set `isDebug: true` for debug mode and `isDebug: false` for production mode.
 
-In the example below, we assume that the user has logged in and your app is starting the SDK as a host.
+In the example below, we assume that the user has logged in and your app is starting the SDK as a Host.
 
 ```swift
 func didLoginSuccessfully() {
