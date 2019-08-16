@@ -1,0 +1,9 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'git@github.com:parousya/Parousya-SAAS-iOS-SDK.git'
+platform :ios, '10.0'
+
+use_frameworks!
+
+target 'iOS Example' do
+  pod 'ParousyaSAASSDK', '0.1.0'
+end
