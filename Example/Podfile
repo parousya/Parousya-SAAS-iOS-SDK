@@ -5,5 +5,5 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'iOS Example' do
-  pod 'ParousyaSAASSDK', '0.1.0'
+  pod 'ParousyaSAASSDK', '0.1.1'
 end

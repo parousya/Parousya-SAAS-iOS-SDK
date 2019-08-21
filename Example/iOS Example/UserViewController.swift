@@ -130,7 +130,14 @@ class UserViewController: UIViewController {
 		
 		self.activeSessions.append(sessionStartedObject)
 		
-		self.eventsTextView.text = "SESSION STARTED\n\(self.eventsTextView.text ?? "")"
+		switch notification.name {
+		case Notification.Name.didStartSessionWithHost:
+			self.eventsTextView.text = "SESSION STARTED WITH HOST \(sessionStartedObject.hostGenericId)\n\(self.eventsTextView.text ?? "")"
+		case Notification.Name.didStartSessionWithCustomer:
+			self.eventsTextView.text = "SESSION STARTED WITH CUSTOMER \(sessionStartedObject.customerGenericId)\n\(self.eventsTextView.text ?? "")"
+		default:
+			break
+		}
 		
 		self.elapsedTimeLabel.isHidden = false
 		self.startTimeLabel.text = "Start Time: \(DateFormatter.localizedString(from: sessionStartedObject.startTime, dateStyle: .short, timeStyle: .medium))"
@@ -186,11 +193,11 @@ class UserViewController: UIViewController {
 		case Notification.Name.didEndAllSessionsManually:
 			self.eventsTextView.text = "ALL SESSIONS ENDED MANUALLY\n\(self.eventsTextView.text ?? "")"
 		case Notification.Name.didEndSessionByHost:
-			self.eventsTextView.text = "SESSION ENDED BY HOST\n\(self.eventsTextView.text ?? "")"
+			self.eventsTextView.text = "SESSION ENDED BY HOST \(sessionEndedObject.hostGenericId)\n\(self.eventsTextView.text ?? "")"
 		case Notification.Name.didEndSessionsByBeingOutOfRange:
 			self.eventsTextView.text = "SESSION ENDED DUE TO RANGE\n\(self.eventsTextView.text ?? "")"
 		case Notification.Name.didEndSessionByCustomer:
-			self.eventsTextView.text = "SESSION ENDED BY CUSTOMER\n\(self.eventsTextView.text ?? "")"
+			self.eventsTextView.text = "SESSION ENDED BY CUSTOMER \(sessionEndedObject.customerGenericId)\n\(self.eventsTextView.text ?? "")"
 		default:
 			break
 		}
