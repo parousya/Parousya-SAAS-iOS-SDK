@@ -52,7 +52,7 @@ Inside Target -> Capabilities tab, please turn ON `Background Modes` and enable 
 Inside Target -> Capabilities tab, please turn ON `Push Notifications`
 
 ## Starting
-To start Parousya SAAS SDK, you will need to obtain the APP_KEY and APP_SECRET from Parousya.
+To start Parousya SAAS SDK, you will need to obtain the `APP_KEY` and `APP_SECRET` values from Parousya.
 Please [contact us](https://www.parousya.com/contact) for access.
 
 You will have 2 choice in starting Parousya SAAS client:
@@ -98,6 +98,10 @@ NotificationCenter.default.addObserver(self, selector: #selector(YourFunction), 
 // This notification is posted when a beacon has been unpaired
 // A PRSBeaconModel object is sent along with this notification, this is the unpaired beacon
 NotificationCenter.default.addObserver(self, selector: #selector(YourFunction), name: Notification.Name.didUnpairBeacon, object: nil)
+
+// This notification is posted when any sessions has been resumed
+// An array of PRSSesssionStartedModel objects is sent along with this notification
+NotificationCenter.default.addObserver(self, selector: #selector(YourFunction), name: Notification.Name.didResumeSessions, object: nil)
 ```
 
 These are the Notifications that Hosts should observe:
@@ -194,3 +198,22 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
     completionHandler(.newData)
 }
 ```
+
+## Example App
+To start using the example app, install the pod first by running this command. The podfile is already there for your convenience.
+```bash
+$ pod install
+```
+
+After getting your `APP_KEY` and `APP_SECRET` values from Parousya, please edit those values in `Constants.swift` file.
+```swift
+#if DEBUG
+    static let appKey = "DEV_APP_KEY"
+    static let appSecret = "DEV_APP_SECRET"
+#else
+    static let appKey = "PROD_APP_KEY"
+    static let appSecret = "PROD_APP_SECRET"
+#endif
+```
+
+Now you can build the project and try out the demo on a device.
