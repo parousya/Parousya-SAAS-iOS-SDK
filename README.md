@@ -200,7 +200,7 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
 ```
 
 ## Example App
-To start using the example app, install the pod first by running this command. The podfile is already there for your convenience.
+To run the example project, clone the repo, and run `pod install` from the Example directory first. The podfile is already there for your convenience.
 ```bash
 $ pod install
 ```
