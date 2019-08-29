@@ -69,6 +69,7 @@ class UserViewController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(zoneEvents), name: Notification.Name.didUnpairBeacon, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(sessionStarted), name: Notification.Name.didStartSessionWithCustomer, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(sessionStarted), name: Notification.Name.didStartSessionWithHost, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(sessionStarted), name: Notification.Name.didResumeSessions, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(sessionEnded), name: Notification.Name.didEndSessionByHost, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(sessionEnded), name: Notification.Name.didEndSessionByCustomer, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(sessionEnded), name: Notification.Name.didEndSessionsByBeingOutOfRange, object: nil)
@@ -124,17 +125,29 @@ class UserViewController: UIViewController {
 	}
 	
 	@objc func sessionStarted(notification: Notification) {
-		guard let sessionStartedObject = notification.object as? PRSSesssionStartedModel else {
+		var sessionStartedObject : PRSSesssionStartedModel
+		if let sessionStartedObjects = notification.object as? [PRSSesssionStartedModel],
+			let lastSessionStartedObject = sessionStartedObjects.last {
+			sessionStartedObject = lastSessionStartedObject
+			
+			self.activeSessions.append(contentsOf: sessionStartedObjects)
+		}
+		else if let object = notification.object as? PRSSesssionStartedModel {
+			sessionStartedObject = object
+			
+			self.activeSessions.append(sessionStartedObject)
+		}
+		else {
 			return
 		}
-		
-		self.activeSessions.append(sessionStartedObject)
 		
 		switch notification.name {
 		case Notification.Name.didStartSessionWithHost:
 			self.eventsTextView.text = "SESSION STARTED WITH HOST \(sessionStartedObject.hostGenericId)\n\(self.eventsTextView.text ?? "")"
 		case Notification.Name.didStartSessionWithCustomer:
 			self.eventsTextView.text = "SESSION STARTED WITH CUSTOMER \(sessionStartedObject.customerGenericId)\n\(self.eventsTextView.text ?? "")"
+		case Notification.Name.didResumeSessions:
+			self.eventsTextView.text = "SESSIONS RESUMED\n\(self.eventsTextView.text ?? "")"
 		default:
 			break
 		}
@@ -147,8 +160,16 @@ class UserViewController: UIViewController {
 		self.endTimeLabel.isHidden = true
 		self.endLocationLabel.isHidden = true
 		
-		if notification.name == Notification.Name.didStartSessionWithCustomer {
-			self.endAllSessionsButton.isHidden = false
+		let userDefaults = UserDefaults.standard
+		
+		if let value = userDefaults.object(forKey: ParousyaSAASSampleClientConstants.userTypeKey) as? Int,
+			let userType = PRSPersonType(rawValue: value) {
+			switch userType {
+			case .host:
+				self.endAllSessionsButton.isHidden = false
+			case .customer:
+				break
+			}
 		}
 		
 		if let elapsedTimeTimer = self.elapsedTimeTimer, elapsedTimeTimer.isValid {
