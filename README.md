@@ -22,7 +22,7 @@ source 'git@github.com:parousya/Parousya-SAAS-iOS-SDK.git'
 platform :ios, '10.0'
 
 target 'TargetName' do
-pod 'ParousyaSAASSDK', '0.1.3'
+pod 'ParousyaSAASSDK', '0.1.4'
 end
 ```
 
@@ -150,7 +150,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     }) { error in
         // Your code here
     }
-    
+
     return true
 }
 ```
@@ -181,9 +181,9 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 }
 
 func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    
+
     let payload = userInfo as NSDictionary
-    
+
     if let _ = payload["parousya"] as? [String:Any] {
         ParousyaSAASSDK.processPushPayload(payload, onHandled: {
             completionHandler(.newData)
@@ -192,7 +192,7 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
         }
         return
     }
-    
+
     // Handle your own push notifications here
     // Call completionHandler with .newData or .noData after you are done
     completionHandler(.newData)
