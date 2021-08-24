@@ -22,7 +22,7 @@ source 'git@github.com:parousya/Parousya-SAAS-iOS-SDK.git'
 platform :ios, '10.0'
 
 target 'TargetName' do
-pod 'ParousyaSAASSDK', '0.1.6' # for Xcode 11 and below, please use '0.1.4'
+pod 'ParousyaSAASSDK', '0.1.7' # for Xcode 11 and below, please use '0.1.4'
 end
 ```
 
