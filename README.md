@@ -22,7 +22,28 @@ source 'git@github.com:parousya/Parousya-SAAS-iOS-SDK.git'
 platform :ios, '10.0'
 
 target 'TargetName' do
-pod 'ParousyaSAASSDK', '0.1.7' # for Xcode 11 and below, please use '0.1.4'
+pod 'ParousyaSAASSDK', '0.1.8' # for Xcode 11 and below, please use '0.1.4'
+end
+```
+
+If you prefer using XCFramework:
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+source 'git@github.com:parousya/Parousya-SAAS-iOS-SDK.git'
+platform :ios, '10.0'
+
+target 'TargetName' do
+pod 'ParousyaSAASSDK', '0.1.9'
+end
+
+#To fix this issue https://github.com/CocoaPods/CocoaPods/issues/9775
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+        end
+    end
 end
 ```
 
