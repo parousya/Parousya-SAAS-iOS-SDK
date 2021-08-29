@@ -25,6 +25,5 @@ Pod::Spec.new do |s|
 
   s.static_framework = true
 
-  s.dependency "SwiftKeychainWrapper"
   s.dependency "EstimoteProximitySDK"
 end
