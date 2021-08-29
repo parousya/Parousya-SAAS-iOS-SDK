@@ -115,9 +115,9 @@ class UserViewController: UIViewController {
 		}
 		else {
 			var beaconStringArray = [String]()
-			for beacon in beacons {
-				beaconStringArray.append("[\(beacon.major),\(beacon.minor)]")
-			}
+            for beacon in beacons {
+                beaconStringArray.append("[\(beacon.metadata["Beaconloc"] ?? "Undefined Beaconloc")]")
+            }
 			self.beaconLabel.text = beaconStringArray.joined(separator: "\n")
 		}
 		
@@ -245,19 +245,19 @@ class UserViewController: UIViewController {
 		})
 		self.elapsedTimeTimer?.tolerance = 0.1
 	}
-	
-	@objc func zoneEvents(notification: Notification) {
-		switch notification.name {
-		case Notification.Name.didEnterBeaconTagRegion:
-			self.eventsTextView.text = "ZONE ENTRY\n\(self.eventsTextView.text ?? "")"
-		case Notification.Name.didExitBeaconTagRegion:
-			self.eventsTextView.text = "ZONE EXIT\n\(self.eventsTextView.text ?? "")"
-		case Notification.Name.didPairBeacon:
-			self.eventsTextView.text = "BEACON PAIRED\n\(self.eventsTextView.text ?? "")"
-		case Notification.Name.didUnpairBeacon:
-			self.eventsTextView.text = "BEACON UNPAIRED\n\(self.eventsTextView.text ?? "")"
-		default:
-			break
-		}
-	}
+    
+    @objc func zoneEvents(notification: Notification) {
+        switch notification.name {
+            case Notification.Name.didEnterBeaconTagRegion:
+                self.eventsTextView.text = "ZONE ENTRY\n\(self.eventsTextView.text ?? "")"
+            case Notification.Name.didExitBeaconTagRegion:
+                self.eventsTextView.text = "ZONE EXIT\n\(self.eventsTextView.text ?? "")"
+            case Notification.Name.didPairBeacon:
+                self.eventsTextView.text = "BEACON PAIRED \(DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium))\n\(self.eventsTextView.text ?? "")"
+            case Notification.Name.didUnpairBeacon:
+                self.eventsTextView.text = "BEACON UNPAIRED \(DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium))\n\(self.eventsTextView.text ?? "")"
+            default:
+                break
+        }
+    }
 }

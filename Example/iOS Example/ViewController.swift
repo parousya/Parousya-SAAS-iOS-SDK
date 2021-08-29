@@ -66,7 +66,9 @@ class ViewController: UIViewController {
 			
 			self.performSegue(withIdentifier: "startObserving", sender: nil)
 		}) { error in
-			
+            let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
 		}
 	}
 }

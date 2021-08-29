@@ -41,5 +41,19 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Bluetooth is required to find nearby beacons</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Location services is required to find nearby beacons</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Location services is required to find nearby beacons</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Location services is required to find nearby beacons</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>bluetooth-central</string>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
 </dict>
 </plist>

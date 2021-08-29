@@ -8,6 +8,7 @@ target 'iOS Example' do
   pod 'ParousyaSAASSDK', '0.1.9'
 end
 
+#To fix this issue https://github.com/CocoaPods/CocoaPods/issues/9775
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
