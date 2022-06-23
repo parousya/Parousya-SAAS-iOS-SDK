@@ -8,6 +8,7 @@
 
 import UIKit
 import ParousyaSAASSDK
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		// Start ParousyaSAASSDK on launch if user is still logged in.
 		// This is required for beacon events even when the app is terminated.
+        UIApplication.shared.registerForRemoteNotifications()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { (isSuccess, error) in
+            print(isSuccess, error)
+        }
 		let userDefaults = UserDefaults.standard
 		if let userId = userDefaults.object(forKey: ParousyaSAASSampleClientConstants.userIdKey) as? String,
 			let value = userDefaults.object(forKey: ParousyaSAASSampleClientConstants.userTypeKey) as? Int,
